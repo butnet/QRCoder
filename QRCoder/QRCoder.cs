@@ -33,7 +33,7 @@ namespace QRCoder
 
         public QRCode CreateQrCode(string plainText, ECCLevel eccLevel, bool utf8BOM = false)
         {
-            var encoding = GetEncodingFromPlaintext(plainText);           
+            var encoding = GetEncodingFromPlaintext(plainText);
             var codedText = PlainTextToBinary(plainText, encoding, utf8BOM);
             var dataInputLength = GetDataLength(encoding, plainText, codedText);
             var version = GetVersion(dataInputLength, encoding, eccLevel);
@@ -41,8 +41,8 @@ namespace QRCoder
             var modeIndicator = DecToBin((int)encoding, 4);
             var countIndicator = DecToBin(dataInputLength, GetCountIndicatorLength(version, encoding));
             var bitString = modeIndicator + countIndicator;
-            
-            
+
+
             bitString += codedText;
 
             //Fill up data code word
@@ -876,7 +876,7 @@ namespace QRCoder
             if (IsValidISO(plainText))
                 codeBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(plainText);
             else
-                codeBytes = utf8BOM ? Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(plainText)).ToArray() : Encoding.UTF8.GetBytes(plainText);          
+                codeBytes = utf8BOM ? Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(plainText)).ToArray() : Encoding.UTF8.GetBytes(plainText);
 
             foreach (var b in codeBytes)
                 codeText += DecToBin(b, 8);
@@ -1226,6 +1226,7 @@ namespace QRCoder
             }
         }
 
+
         public class QRCode
         {
             public List<BitArray> ModuleMatrix { get; set; }
@@ -1262,10 +1263,10 @@ namespace QRCoder
                         var module = ModuleMatrix[(y + pixelsPerModule) / pixelsPerModule - 1][(x + pixelsPerModule) / pixelsPerModule - 1];
                         if (module)
                         {
-                            gfx.FillRectangle(new SolidBrush(darkColor), new Rectangle(x, y, pixelsPerModule, pixelsPerModule));                           
+                            gfx.FillRectangle(new SolidBrush(darkColor), new Rectangle(x, y, pixelsPerModule, pixelsPerModule));
                         }
                         else
-                            gfx.FillRectangle(new SolidBrush(lightColor), new Rectangle(x, y, pixelsPerModule, pixelsPerModule));                        
+                            gfx.FillRectangle(new SolidBrush(lightColor), new Rectangle(x, y, pixelsPerModule, pixelsPerModule));
                     }
                 }
 
